@@ -30,7 +30,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function signIn(?User $user = null): User
     {
-        $user ??= User::where('username', 'admin')->first();
+        $user ??= User::where('email', 'admin@example.com')->first();
         Sanctum::actingAs($user, ['*']);
 
         return $user;
