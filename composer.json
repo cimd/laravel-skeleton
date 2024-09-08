@@ -1,0 +1,104 @@
+{
+    "name": "konnec/laravel-skeleton",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "konnec/vue-eloquent-api": "^1.2",
+        "laravel/framework": "^11.9",
+        "laravel/helpers": "^1.7",
+        "laravel/horizon": "^5.24",
+        "laravel/octane": "^2.5",
+        "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.9",
+        "laravel/tinker": "^2.9",
+        "meilisearch/meilisearch-php": "^1.8",
+        "spatie/laravel-backup": "^8.8",
+        "spatie/laravel-data": "^4.6"
+    },
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.0",
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.13",
+        "laravel/telescope": "^5.2",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.1",
+        "larastan/larastan": "^2.9",
+        "pestphp/pest-plugin-faker": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.4",
+        "pestphp/pest-plugin-type-coverage": "^2.8",
+        "spatie/laravel-ignition": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Modules\\": "modules/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan horizon:publish --ansi",
+            "@php artisan telescope:publish --ansi",
+            "@php artisan scout:sync-index-settings --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ],
+        "larastan": [
+            "./vendor/bin/phpstan analyse --memory-limit 1024M"
+        ],
+        "larastan:baseline": [
+            "./vendor/bin/phpstan analyse --generate-baseline --memory-limit 1024M"
+        ],
+        "pint": [
+            "./vendor/bin/pint"
+        ],
+        "pest": [
+            "./vendor/bin/pest --coverage"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models --nowrite"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "laravel/telescope"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

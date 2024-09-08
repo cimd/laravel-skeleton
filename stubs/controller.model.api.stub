@@ -1,0 +1,49 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use Illuminate\Http\JsonResponse;
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+
+class {{ class }} extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index']);
+    }
+
+    public function index(Request $request): JsonResponse
+    {
+        $result = {{ model }}::apiQuery($request);
+
+        return response()->index($result);
+    }
+
+    public function store({{ storeRequest }} $request): JsonResponse
+    {
+        ${{ modelVariable }} = {{ model }}::create($request->all());
+
+        return response()->store(${{ modelVariable }});
+    }
+
+    public function show({{ model }} ${{ modelVariable }}): JsonResponse
+    {
+        return response()->show(${{ modelVariable}});
+    }
+
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
+    {
+        ${{ modelVariable }}->fill($request->all())->save();
+
+        return response()->update(${{ modelVariable}});
+    }
+
+    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
+    {
+        ${{ modelVariable }}->delete();
+
+        return response()->destroy(${{ modelVariable}});
+    }
+}

@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Konnec\VueEloquentApi\Filters\WhereEqual;
+use Konnec\VueEloquentApi\Filters\WhereIn;
+use Konnec\VueEloquentApi\Traits\EloquentApi;
+
+class {{ class }} extends Model
+{
+    use SoftDeletes;
+    use EloquentApi;
+
+    protected $table = "{{ class }}";
+
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    protected $casts = [
+        'integer' => 'integer',
+        'integer' => 'integer',
+        'integer' => 'integer',
+    ];
+
+    protected array $filters = [
+        'field' => WhereEqual::class,
+        'field' => WhereIn::class
+    ];
+}
