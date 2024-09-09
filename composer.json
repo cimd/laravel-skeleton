@@ -45,6 +45,11 @@
         }
     },
     "scripts": {
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php artisan telescope:install --ansi",
+            "@php artisan migrate --graceful --ansi"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -54,16 +59,11 @@
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta",
             "@php artisan horizon:publish --ansi",
-            "@php artisan telescope:publish --ansi",
+            "@php artisan telescope:publish --tag=laravel-assets --ansi --force",
             "@php artisan scout:sync-index-settings --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
         ],
         "larastan": [
             "./vendor/bin/phpstan analyse --memory-limit 1024M"
