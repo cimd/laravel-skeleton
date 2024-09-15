@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Konnec\Helpers\Actions\LoadModuleCommands;
 
 class Kernel extends ConsoleKernel
 {
@@ -45,20 +46,6 @@ class Kernel extends ConsoleKernel
 
     private function registerModulesCommands(): void
     {
-        //      Normalize search path between windows and linux platforms
-        (PHP_OS === 'WINNT') ? $searchPath = 'modules\*\Commands\*.php' : $searchPath = 'modules/*/Commands/*.php';
-
-        $modulesCommands = collect(
-            glob(base_path($searchPath))
-        )->map(function ($item) {
-            (PHP_OS === 'WINNT') ? $withoutPrefix = Str::after($item, base_path() . '\\modules\\') : $withoutPrefix = Str::after($item, base_path() . '/modules/');
-            $withoutSuffix = Str::beforeLast($withoutPrefix, '.php');
-
-            $partial = 'Modules' . DIRECTORY_SEPARATOR . $withoutSuffix;
-
-            return str_replace('/', '\\', $partial);
-        })->toArray();
-
-        $this->commands = array_merge($this->commands, $modulesCommands);
+        $this->commands = array_merge($this->commands, LoadModuleCommands::handle());
     }
 }
