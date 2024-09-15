@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "konnec/laravel-helpers": "*",
         "konnec/vue-eloquent-api": "^1.2",
         "laravel/framework": "^11.9",
         "laravel/helpers": "^1.7",
@@ -61,7 +62,6 @@
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:meta",
-            "@php artisan horizon:publish --ansi",
             "@php artisan telescope:publish --tag=laravel-assets --ansi --force",
             "@php artisan scout:sync-index-settings --ansi"
         ],

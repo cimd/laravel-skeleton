@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Konnec\Helpers\Actions\LoadModuleRoutes;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -47,19 +48,6 @@ class RouteServiceProvider extends ServiceProvider
 //
             ->group(base_path('routes/api.php'));
 
-        $this->loadModuleRoutes();
-    }
-
-    private function loadModuleRoutes(): void
-    {
-        $routeFiles = collect(
-            glob(base_path('modules/*/Routes/*.api.php'))
-        );
-
-        $routeFiles->each(function ($item) {
-            Route::prefix('api')
-                ->middleware('api')
-                ->group($item);
-        });
+        LoadModuleRoutes::handle();
     }
 }
